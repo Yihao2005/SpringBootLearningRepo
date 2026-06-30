@@ -11,10 +11,10 @@ Text Emphasis
 
 List
 Unorder List
--A
--B
-    -B1
-    -B2
+- A
+- B
+    - B1
+    - B2
 
 Order List
 1. Step one
