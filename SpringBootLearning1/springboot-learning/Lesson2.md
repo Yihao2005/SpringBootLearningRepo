@@ -80,3 +80,124 @@ id.
 
 Get /users/1 : Get users whose id is one.
 Get /users?city=Melbourne : Find all users living in Melbourne.
+
+# Part 2: POST, JSON, and @RequestBody
+
+## What is POST?
+GET is usually used to retrieve data.
+
+POST is usually used to create or submit data.
+
+Example:
+- Registering an account 
+- Creating a task
+- Publishing a post
+- Submitting login information
+
+## Create a class to retrieve data
+**dto** : Data Transfer Object
+
+dto is an object used to transfer data from backend and frontend
+
+```java
+public class CreateUserRequest {
+    private String name;
+    private int age;
+    private String email;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+}
+```
+
+## Why do we need getters and setters
+ SpringBoot receives JSON and needs to put the values into a java object
+
+## Create a POST API
+```java
+
+    @PostMapping("/users")
+    public String createUser(@RequestBody CreateUserRequest request){
+        return "User Created: "
+                + request.getName()
+                + " age: "
+                + request.getAge()
+                + " email: "
+                +request.getEmail();
+    }
+```
+
+## @RequestBody
+Convert the JSON sent by the frontend into a CreateUserRequest java object
+
+Frontend sends JSON
+↓
+@RequestBody
+↓
+CreateUserRequest object
+↓
+request.getName()
+request.getAge()
+request.getEmail()
+
+## Testing a POST request with curl
+
+Browser address bar are good for testing GET requests, but they are not suitable
+for sending JSON POST request.
+
+curl is command-line tool for sending network requests.
+
+```Terminal
+curl -X POST http://localhost:8080/users \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Yihao",
+    "age": 20,
+    "email": "yuyihao@gmail.com"
+  }'
+```
+
+```Terminal
+ -X POST
+```
+Specify the request method is POST
+
+```Terminal
+  http://localhost:8080/users
+```
+The URL of your Spring Boot API
+
+```Terminal
+ -H "Content-Type: application/json"
+```
+Tell the backend that the request body uses JSON format.
+
+```Terminal
+ -d '{
+    "name": "Yihao",
+    "age": 20,
+    "email": "yuyihao@gmail.com"
+  }'
+```
+-d means the data being sent, also called the request body.

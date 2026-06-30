@@ -1,9 +1,8 @@
 package com.example.demo.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.demo.dto.CreateTaskRequest;
+import com.example.demo.dto.CreateUserRequest;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class HelloController {
@@ -49,5 +48,25 @@ public class HelloController {
     @GetMapping("/book/{id}")
     public String book(@PathVariable int id){
         return "Book id: " + id;
+    }
+
+    @PostMapping("/users")
+    public String createUser(@RequestBody CreateUserRequest request){
+        return "User Created: "
+                + request.getName()
+                + " age: "
+                + request.getAge()
+                + " email: "
+                +request.getEmail();
+    }
+
+    @PostMapping("/tasks")
+    public String createTasks(@RequestBody CreateTaskRequest request){
+        return "Task created: "
+                + request.getTitle()
+                + " Description: "
+                + request.getDescription()
+                + " Priority: "
+                + request.getPriority();
     }
 }
