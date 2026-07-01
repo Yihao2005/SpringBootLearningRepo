@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.CreateTaskRequest;
 import com.example.demo.dto.CreateUserRequest;
+import com.example.demo.dto.TaskResponse;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -61,12 +62,11 @@ public class HelloController {
     }
 
     @PostMapping("/tasks")
-    public String createTasks(@RequestBody CreateTaskRequest request){
-        return "Task created: "
-                + request.getTitle()
-                + " Description: "
-                + request.getDescription()
-                + " Priority: "
-                + request.getPriority();
+    public TaskResponse createTasks(@RequestBody CreateTaskRequest request){
+        return new TaskResponse(
+                request.getTitle(),
+                request.getDescription(),
+                request.getPriority()
+                );
     }
 }
