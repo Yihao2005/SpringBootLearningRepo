@@ -1,16 +1,16 @@
-package com.example.demo.dto;
+package com.example.demo.model;
 
-public class TaskResponse {
+public class Task {
 
     private Long id;
     private String title;
-    private String description;
+    private String descripton;
     private int priority;
 
-    public TaskResponse(Long id, String title,String description, int priority){
+    public Task (Long id, String title, String descripton, int priority){
         this.id = id;
         this.title = title;
-        this.description = description;
+        this.descripton = descripton;
         this.priority = priority;
     }
 
@@ -22,11 +22,11 @@ public class TaskResponse {
         return title;
     }
 
-    public String getDescription(){
-        return description;
+    public String getDescripton(){
+        return  descripton;
     }
 
     public int getPriority(){
-        return priority;
+        return  priority;
     }
 }

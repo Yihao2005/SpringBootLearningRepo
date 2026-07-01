@@ -3,10 +3,19 @@ package com.example.demo.controller;
 import com.example.demo.dto.CreateTaskRequest;
 import com.example.demo.dto.CreateUserRequest;
 import com.example.demo.dto.TaskResponse;
+import com.example.demo.service.TaskService;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class HelloController {
+
+    private final TaskService taskService;
+
+    public HelloController(TaskService taskService){
+        this.taskService = taskService;
+    }
 
     @GetMapping("/hello")
     public String hello(){
@@ -63,10 +72,21 @@ public class HelloController {
 
     @PostMapping("/tasks")
     public TaskResponse createTasks(@RequestBody CreateTaskRequest request){
-        return new TaskResponse(
-                request.getTitle(),
-                request.getDescription(),
-                request.getPriority()
-                );
+        return taskService.createTask(request);
+    }
+
+    @GetMapping("/tasks")
+    public List<TaskResponse> getAllTasks(){
+        return taskService.getAllTasks();
+    }
+
+    @GetMapping("/tasks/{id}")
+    public TaskResponse getTaskById(@PathVariable long id){
+        return taskService.getTaskById(id);
+    }
+
+    @GetMapping("/tasks/search")
+    public List<TaskResponse> searchTasks(@RequestParam int priority){
+        return taskService.getTasksByPriority(priority);
     }
 }

@@ -88,7 +88,7 @@ curl -X POST http://localhost:8080/tasks \
 ```
 
 or pretty JSON output
-```Terminal
+```Bash
 curl -X POST http://localhost:8080/tasks \
 -H "Content-Type:application/json" \
 -d '{
