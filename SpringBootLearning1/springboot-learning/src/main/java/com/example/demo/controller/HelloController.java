@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.dto.CreateTaskRequest;
 import com.example.demo.dto.CreateUserRequest;
 import com.example.demo.dto.TaskResponse;
+import com.example.demo.dto.UpdateTaskRequest;
 import com.example.demo.service.TaskService;
 import org.springframework.web.bind.annotation.*;
 
@@ -88,5 +89,26 @@ public class HelloController {
     @GetMapping("/tasks/search")
     public List<TaskResponse> searchTasks(@RequestParam int priority){
         return taskService.getTasksByPriority(priority);
+    }
+
+    @PutMapping("/tasks/{id}")
+    public TaskResponse updateTask(
+            @PathVariable long id,
+            @RequestBody UpdateTaskRequest request
+    ){
+        return taskService.updateTask(id,request);
+    }
+
+    @DeleteMapping("/tasks/{id}")
+    public String deleteTask(
+            @PathVariable long id
+    ){
+        boolean deleted = taskService.deleteTask(id);
+
+        if (deleted){
+            return "Task deleted successfully!";
+        }
+
+        return "Task not found!";
     }
 }

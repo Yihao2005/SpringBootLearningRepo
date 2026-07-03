@@ -22,11 +22,23 @@ public class Task {
         return title;
     }
 
+    public void setTitle(String title){
+        this.title = title;
+    }
+
     public String getDescripton(){
         return  descripton;
     }
 
+    public void setDescripton(String descripton){
+        this.descripton = descripton;
+    }
+
     public int getPriority(){
         return  priority;
+    }
+
+    public void setPriority(int priority){
+        this.priority = priority;
     }
 }

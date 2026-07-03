@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.dto.CreateTaskRequest;
 import com.example.demo.dto.TaskResponse;
+import com.example.demo.dto.UpdateTaskRequest;
 import com.example.demo.model.Task;
 import org.springframework.stereotype.Service;
 
@@ -55,6 +56,28 @@ public class TaskService {
             }
         }
         return responses;
+    }
+
+    public TaskResponse updateTask(long id, UpdateTaskRequest request){
+        for (Task task: tasks){
+            if (task.getId() == id){
+                task.setTitle(request.getTitle());
+                task.setDescripton(request.getDescription());
+                task.setPriority(request.getPriority());
+                return convertToResponse(task);
+            }
+        }
+        return null;
+    }
+
+    public boolean deleteTask(long id){
+        for (Task task: tasks){
+            if (task.getId() == id){
+                tasks.remove(task);
+                return true;
+            }
+        }
+        return false;
     }
 
     private TaskResponse convertToResponse(Task task) {
