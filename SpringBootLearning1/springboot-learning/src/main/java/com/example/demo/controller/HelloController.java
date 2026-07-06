@@ -5,6 +5,7 @@ import com.example.demo.dto.CreateUserRequest;
 import com.example.demo.dto.TaskResponse;
 import com.example.demo.dto.UpdateTaskRequest;
 import com.example.demo.service.TaskService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -71,9 +72,14 @@ public class HelloController {
                 +request.getEmail();
     }
 
+
+    //---------------------------------------------------------------------------------------
+
     @PostMapping("/tasks")
-    public TaskResponse createTasks(@RequestBody CreateTaskRequest request){
-        return taskService.createTask(request);
+    public ResponseEntity<TaskResponse> createTasks(@RequestBody CreateTaskRequest request){
+        TaskResponse task = taskService.createTask(request);
+
+        return ResponseEntity.status(201).body(task);
     }
 
     @GetMapping("/tasks")
@@ -82,8 +88,14 @@ public class HelloController {
     }
 
     @GetMapping("/tasks/{id}")
-    public TaskResponse getTaskById(@PathVariable long id){
-        return taskService.getTaskById(id);
+    public ResponseEntity<TaskResponse> getTaskById(@PathVariable long id){
+        TaskResponse task = taskService.getTaskById(id);
+
+        if (task == null){
+            return  ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(task);
     }
 
     @GetMapping("/tasks/search")
@@ -92,23 +104,29 @@ public class HelloController {
     }
 
     @PutMapping("/tasks/{id}")
-    public TaskResponse updateTask(
+    public ResponseEntity<TaskResponse> updateTask(
             @PathVariable long id,
             @RequestBody UpdateTaskRequest request
     ){
-        return taskService.updateTask(id,request);
+        TaskResponse updateTask = taskService.updateTask(id,request);
+
+        if (updateTask == null){
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(updateTask);
     }
 
     @DeleteMapping("/tasks/{id}")
-    public String deleteTask(
+    public ResponseEntity<Void> deleteTask(
             @PathVariable long id
     ){
         boolean deleted = taskService.deleteTask(id);
 
-        if (deleted){
-            return "Task deleted successfully!";
+        if (!deleted){
+            return ResponseEntity.notFound().build();
         }
 
-        return "Task not found!";
+        return ResponseEntity.noContent().build();
     }
 }
