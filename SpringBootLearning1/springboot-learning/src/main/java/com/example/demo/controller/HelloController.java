@@ -5,6 +5,7 @@ import com.example.demo.dto.CreateUserRequest;
 import com.example.demo.dto.TaskResponse;
 import com.example.demo.dto.UpdateTaskRequest;
 import com.example.demo.service.TaskService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -76,7 +77,9 @@ public class HelloController {
     //---------------------------------------------------------------------------------------
 
     @PostMapping("/tasks")
-    public ResponseEntity<TaskResponse> createTasks(@RequestBody CreateTaskRequest request){
+    public ResponseEntity<TaskResponse> createTasks(
+           @Valid @RequestBody CreateTaskRequest request
+    ){
         TaskResponse task = taskService.createTask(request);
 
         return ResponseEntity.status(201).body(task);
@@ -106,7 +109,7 @@ public class HelloController {
     @PutMapping("/tasks/{id}")
     public ResponseEntity<TaskResponse> updateTask(
             @PathVariable long id,
-            @RequestBody UpdateTaskRequest request
+            @Valid @RequestBody UpdateTaskRequest request
     ){
         TaskResponse updateTask = taskService.updateTask(id,request);
 

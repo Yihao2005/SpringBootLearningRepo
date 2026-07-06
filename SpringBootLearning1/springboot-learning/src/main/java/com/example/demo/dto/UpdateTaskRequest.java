@@ -1,8 +1,14 @@
 package com.example.demo.dto;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+
 public class UpdateTaskRequest {
+    @NotBlank(message = "Title must not be blank!")
     private String title;
+    @NotBlank(message = "Description must not be blank!")
     private String description;
+    @Min(value = 1, message = "Priority must be at least 1!")
     private int priority;
 
     public String getTitle(){
