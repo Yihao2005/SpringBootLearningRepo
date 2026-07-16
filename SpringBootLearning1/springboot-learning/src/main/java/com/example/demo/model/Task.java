@@ -1,14 +1,23 @@
 package com.example.demo.model;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name="tasks")
 public class Task {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String title;
     private String descripton;
     private int priority;
 
-    public Task (Long id, String title, String descripton, int priority){
-        this.id = id;
+    public Task(){
+    }
+
+    public Task (String title, String descripton, int priority){
         this.title = title;
         this.descripton = descripton;
         this.priority = priority;
